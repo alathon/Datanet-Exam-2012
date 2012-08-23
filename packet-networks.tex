@@ -1,1 +1,64 @@
 \section{Packet-switched networks}
+Packet switched networks differ from circuit-switched
+networks in that they do not guarantee bandwidth by dedicating
+a connection to the purpose. 
+
+Packets are data that you want to send through the system, possibly
+split up into many smaller packets, to fit within the size constraints
+of routers and switches.
+
+\subsection{ISPs}
+There are usually 3 tiers of ISPs:
+\begin{enumerate}
+    \item Tier 1 ISPs, directly connectd to other tier-1 ISPs. International.
+        \subitem Known as the Internet backbone. Sprint, Verizon, etc.
+    \item Tier 2 ISPs, which are connected to a/a few tier 1 ISPs
+        \subitem Typically provides regional coverage.
+        \subitem 'Customer' of a tier-1 ISP
+        \subitem Has end-point customers ('real' customers)
+    \item Tier 3 and below
+        \subitem Even more regional usually, and will connect to the tier
+        above.
+\end{enumerate}
+
+Tier 1 forms the backbone of everything, and tier-2 connect directly to those
+and will have customers. Its like leasing out a cable, and a sub-section of it
+is then leased on to someone else, who then leases on a subsection of that seciton.
+
+\subsection{Delay / Loss / Throughput}
+\subsubsection{Processing delay}
+Time required to examine a packet's header, and determine where to direct the
+packet. Microseconds or less.
+
+\subsubsection{Queueing delay}
+The delay before a packet is transferred into the limited-space queue of the
+link. 
+
+\textbf{Traffic intensity} = La/R where: \\
+L = packet size\\
+a = average arrival rate of packets\\
+R = transmission rate\\
+
+If La/R is over 1, then the queue will increase without bound, because you're
+getting more incoming traffic than you're pushing out.
+
+\textbf{Packet loss} occurs when the queue is 100\% full, at that point the
+packet is dropped.
+
+\subsubsection{Transmission delay}
+The delay to push all of the bits of a packet onto the link, measured as L/R
+where L is the size in bits and R is the transmission rate in bits/second.
+
+\subsubsection{Propagation delay}
+The delay to go from link A to link B. Delay is equal to the distance travelled
+divided by the propagation speed of the link. Usually measured in metres. Propagation
+speed is usually at or close to the speed of light (Depending on whether its fibre,
+twisted-pair copper wire, and so on). Propagation delays are usually in the order
+of milliseconds, between links.
+
+\textbf{Nodal delay} = processing + queue + transmission + propagation
+
+The total delay between two nodes A and B, is the sum of nodal delay between each
+point the packet has to travel along, to get from A to B. If, for example, it
+needs to pass through 5 routers - Then it is the sum of the nodal delay between
+those 5 routers.
