@@ -43,6 +43,13 @@ protocols in the transport layer and link layer already check the
 sums.
 
 \subsection{IPv4 vs IPv6}
+IPv6 is made to be faster than IPv4 by discarding some of the fields
+from the IPv4 datagram format, e.g. fragmentation was a time consuming
+task. Besides this, the most obvious reason for a change is the limit
+of addresses in IPv4 ($2^{32}$), which is almost exhausted. With IPv6,
+the address field is 128-bit, making the maximum number of addresses
+$2^{128}$. According the estimation based on this calculation,
+humanity would not have to increase the number of addresses for a long time.
 
 \subsection{Fragmentation}
 Not all link-layer protocols can carry the same amount of data. To
