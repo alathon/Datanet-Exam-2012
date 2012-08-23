@@ -1,6 +1,23 @@
 \section{DHCP}
 DHCP is used when a computer wants to connect to a network. It is used
-to 
+to assign IP addresses to connecting computers.
+
+The computer that wants to connect, sends a DHCP packet to address
+0.0.0.0 and the broadcast address 255.255.255.255. The DHCP service
+should then give a lease on an address to the connecting
+machine. The machine sends a DHCP discover packet, the server answers
+with a DHCP offer packet, the machine sends a DHCP request packet, and
+finally the server sends a DHCP ACK.
 
 \subsection{CIDR}
+CIDR is used to calculate the IP address. The format is x.x.x.x/n
+where n ranges from 1 to 32.
+
+To convert from full decimal notation to CIDR notation, we convert the
+decimal notation to binary, and note how many bits are set. This
+defines what $n$ in the previous example should be.\\
+For instance with a subnet mask of 255.255.255.0 would be
+255.255.255.0/24 in CIDR notation, since 24 bits are set in the
+decimal format.
+
 \subsection{Forwarding}
