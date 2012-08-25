@@ -1,1 +1,18 @@
 \section{NAT}
+NAT (Network Address Translation) is used by routers to control the flow of
+packets between the WAN (Wide Area Network) and the LAN. When a user is sitting
+behind a router, the router appears to be a communicating client, when the real
+client is sitting behind the router. The router maps WAN addresses to LAN
+addresses. When a user behind a router wants to communicate with the outside
+world, he opens a specific port to communicate over. The outside world only
+knows about this port, and sends data to the router through this port. The
+router holds a "NAT translation table", which maps open communication from the
+WAN to the LAN, so it knows where the incoming data is supposed to go.
+
+\subsection{UPnP}
+If an application wants to work around NAT, and the applications end-point of
+communication is NAT UPnP compatible (the clients network needs to be
+compatible too), the application may create a public IP and a public port, which
+appears to be the clients actual IP and port. Other contacts through the
+application establish connection through this public mapping, and the router
+makes sure it is sent to the correct client.
