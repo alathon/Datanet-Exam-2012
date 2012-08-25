@@ -19,8 +19,15 @@ defines what $n$ in the previous example should be.\\
 For instance with a subnet mask of 255.255.255.0 would be
 192.168.1.1/24 in CIDR notation, since 24 bits are set in the
 decimal format. In this case, the network address is 192.168.1.0 and the
-broadcast address is 192.168.1.127.
+broadcast address would be 192.168.1.255.
 
-The other way around, we would have 
+The other way around, we would have an address in CIDR notation, e.g. a random
+address in the range from the example above, 192.168.1.17/24. The /24 would
+translate to 255.255.255.0, and again we have that the network address resides
+on x.x.x.0, the broadcast on x.x.x.255, and that the range is x.x.x.1-254.
+
+In the same folder as these notes, there are two documents: cidr-subnet-cheatsheet
+and subnets. Both of these documents contain tables with common bit fields to
+look up the address fields.
 
 \subsection{Forwarding}
