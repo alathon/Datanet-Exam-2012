@@ -11,20 +11,47 @@ finally the server sends a DHCP ACK.
 
 \subsection{CIDR}
 CIDR is used to calculate the IP address. The format is x.x.x.x/n
-where n ranges from 1 to 32.
+where n ranges from 1 to 32, and is called the \textbf{prefix}.
 
 To convert from full decimal notation to CIDR notation, we convert the
 decimal notation to binary, and note how many bits are set. This
-defines what $n$ in the previous example should be.\\
-For instance with a subnet mask of 255.255.255.0 would be
-192.168.1.1/24 in CIDR notation, since 24 bits are set in the
-decimal format. In this case, the network address is 192.168.1.0 and the
-broadcast address would be 192.168.1.255.
+defines what the prefix should be.
 
-The other way around, we would have an address in CIDR notation, e.g. a random
-address in the range from the example above, 192.168.1.17/24. The /24 would
-translate to 255.255.255.0, and again we have that the network address resides
-on x.x.x.0, the broadcast on x.x.x.255, and that the range is x.x.x.1-254.
+\subsubsection{Calculating subnet mask}
+The subnet mask and Class determines how many subnets and hosts you get.
+
+\[Hosts = 2^(HostBits)-2
+    Subnets = 2^(SubnetBits)-2
+\]
+
+The network address is used for routing tables.
+
+\subsubsection{Calculating subnet address}
+Subnet address is obtained by doing a binary AND between IP address and Subnet Mask.
+
+For example:
+
+\begin{align*}
+    IP:          &150.10.10.10\\
+    Subnet mask: &255.255.252.0 (150.10.10.10/22)\\
+    IP Binary:   &10010110.00001010.00001010.00001010\\
+    Mask binary: &11111111.11111111.11111100.00000000\\
+    Binary AND:  &10010110.00001010.00001000.0000000000 (150.10.8.0)
+\end{align*}
+
+\subsubsection{Calculating broadcast address}
+Broadcast address is obtained by doing a binary OR between Subnet Address/Network Address
+and inverted Subnet Mask
+
+For example:
+
+\begin{align*}
+    IP:           &150.10.10.10\\
+    Subnet mask:  &255.255.252.0 (150.10.10.10/22)\\
+    Subnet addr:  &10010110.00001010.00001000.00000000 (150.10.8.0)
+    Inv sub mask: &00000000.00000000.00000011.11111111 (0.0.3.255)
+    Binary OR:    &10010110.00001010.00001011.11111111 (150.10.11.255)
+\end{align*}
 
 In the same folder as these notes, there are two documents: cidr-subnet-cheatsheet
 and subnets. Both of these documents contain tables with common bit fields to
