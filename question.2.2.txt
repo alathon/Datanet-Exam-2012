@@ -1,0 +1,7 @@
+Hop                 IP Source Header    IP Dest. Header     IP TTL Header
+H1 -> NAT router    10.0.0.2            42.42.47.10         64
+NAT -> router       10.0.0.2            42.42.47.10         63
+router -> WS1       10.0.0.2            42.42.47.10         62
+WS1 -> router       42.42.47.10         10.0.0.2            64
+router-> NAT        42.42.47.10         10.0.0.2            63
+NAT -> H1           42.42.47.10         10.0.0.2            62

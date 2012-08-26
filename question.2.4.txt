@@ -1,0 +1,7 @@
+2.4.a
+The path taken will be 1->2->3->4->6 at a cost of 41. 
+As opposed to 1->2->5->6 at a cost of 42, or 1->3->4->6 at a cost of 45.
+
+2.4.b
+No clue. Just make minimum spanning tree and be happy.
+

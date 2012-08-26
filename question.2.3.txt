@@ -1,0 +1,37 @@
+2.3.a
+The packet will need to be discarded, as the forwarding tables have no notion
+of the MAC address - Which will prompt the switch to broadcast the packet to
+all attached devices.
+
+2.3.b
+The packet will not need to be discarded, as the previous packet has filled the
+forwarding tables with entries on H3, and H2.
+
+2.3.c
+
+SWITCH 1:
+After first transmission:
+|MAC Address        | Interface Number  |
+|---------------------------------------|
+|H2 MAC             | 2                 |
+-----------------------------------------
+
+After second transmission:
+|MAC Address        | Interface Number  |
+|---------------------------------------|
+|H2 MAC             | 2                 |
+|H5 MAC             | 4                 |
+-----------------------------------------
+
+Switch 2:
+After first transmission:
+|MAC Address        | Interface Number  |
+|---------------------------------------|
+|H2 MAC             | 1                 |
+-----------------------------------------
+
+After second transmission:
+|MAC Address        | Interface Number  |
+|---------------------------------------|
+|H2 MAC             | 1                 |
+-----------------------------------------
