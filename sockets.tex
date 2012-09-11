@@ -1,1 +1,18 @@
 \section{Sockets}
+Sockets sit in between a process and the underlying layers - Providing an easy
+bridge between the application and transport layers. An internet socket, as is
+the topic here, has a local IP:Port, a remote IP:Port, and a Protocol. The protocol
+can be UDP, TCP, or one of the other transport-layer protocols.
+
+\begin{itemize}
+    \item A UDP socket is a connectionless socket, using UDP as the transport layer mechanism.
+    \item A TCP socket is a connection-oriented socket that uses TCP or SCTP.
+\end{itemize}
+
+A socket pair is a pair of two communicating sockets (One on the local machine,
+one on the remote machine), which together form a 4-tuple (Source IP, destination IP,
+source port, destination port). TCP socket 4-tuples are assigned a socket number,
+where-as each local unique UDP socket is assigned a socket number.
+
+Raw sockets are also available, and are used in networking equipment for ICMP,
+OSPF, IGMP and similar.

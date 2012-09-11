@@ -1,8 +1,13 @@
 \section{HTTP}
-\section{Cookies}
+\subsection{Cookies}
 Since HTTP is stateless, there is a need to convey some measure of state in
-a different manner. For example, 
-\section{Web caches}
+a different manner. For example, a website may store a client-side cookie with
+session information, such that the client doesn't have to log in more than once.
+
+This works through a header in both the HTTP request and response (Set-cookie on
+request and Cookie in response).
+
+\subsection{Web caches}
 An HTTP web cache is a proxy that sits in front of a web-server, intercepting
 calls in order to potentially return to the caller a cached version of an object.
 Most caches will store a key-value map between URL's and the response from the web-server
@@ -14,7 +19,7 @@ maintaining the speed of responses, especially in situations where website(s) ha
 a large number of concurrent users. Most web caches will also keep the cache entirely
 in-memory, making response time in the order of milliseconds.
 
-\section{REST}
+\subsection{REST}
 REST is a Web service design model. Something that conforms to the REST model is
 generally called a \textbf{RESTful} service. HTTP is RESTful.
 
