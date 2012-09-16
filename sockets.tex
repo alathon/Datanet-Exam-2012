@@ -16,3 +16,72 @@ where-as each local unique UDP socket is assigned a socket number.
 
 Raw sockets are also available, and are used in networking equipment for ICMP,
 OSPF, IGMP and similar.
+
+\subsection{TCP sockets}
+With TCP sockets, a persistent connection must be initiated and maintained. It
+is the responsibility of the client to initiate the connection, and so the server
+must be listening in the first place. This means:
+
+\begin{itemize}
+    \item Server must keep a listen socket open and waiting.
+    \item During the 3-way handshake, when the client first contacts the server,
+        it immediately allocates a new socket to respond to the client with.
+    \item At the end of the 3-way handshake, the client and server talk through
+        the servers new socket. This is called the \textbf{connection socket}
+\end{itemize}
+
+Since TCP is stateful, connection-oriented and duplex, both sides both send
+and receive bytes through their respective sockets. 
+
+Roughly, the process from server can be illustrated as follows:
+
+\begin{enumerate}
+    \item Server creates welcome/listen socket.
+    \item Server calls welcomeSocket.accept() which blocks/waits for input
+    \item When incoming connection request arrives, create connection socket.
+    \item Read data from connection socket, and write reply to connection socket.
+\end{enumerate}
+
+The process from client can be illustrated as follows:
+
+\begin{enumerate}
+    \item Client creates socket and connects to server.
+    \item Client sends request using client socket.
+    \item Client reads reply from client socket.
+\end{enumerate}
+
+Sockets are implemented with streams attached to them. An output stream is for
+sending data \textbf{out} to the destination, and an input stream for \textbf{receiving}
+data from the destination through the socket. On both sides.
+
+\subsection{UDP sockets}
+Unlike TCP sockets, UDP sockets don't need to verify anything about the receiving
+socket, do not need to handshake, and so on. This means that you can successfully
+send data through UDP to a server that may or may not be listening, which is in
+the nature of UDP to begin with.
+
+This has a number of implications:
+\begin{enumerate}
+    \item The server doesn't need a separate socket for each client.
+    \item Data packets sent through a UDP socket must carry their destination
+        tuple, always.
+    \item There are no streams attached to UDP sockets.
+    \item The receiving side must unwrap each packet to discover destination
+        address.
+\end{enumerate}
+
+The process from server might look like this:
+\begin{itemize}
+    \item Server creates UDP socket to read incoming requests.
+    \item Server reads request from server socket.
+    \item Server writes reply to server socket, specifying destination host
+        address \& port number.
+\end{itemize}
+
+The process from client might look like this:
+\begin{itemize}
+    \item Client creates UDP socket.
+    \item Client creates datagram destined for destination address \& port
+        and sends using UDP socket.
+    \item Client reads reply from socket.
+\end{itemize}
