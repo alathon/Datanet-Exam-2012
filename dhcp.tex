@@ -5,9 +5,17 @@ to assign IP addresses to connecting computers.
 The computer that wants to connect, sends a DHCP packet to address
 0.0.0.0 and the broadcast address 255.255.255.255. The DHCP service
 should then give a lease on an address to the connecting
-machine. The machine sends a DHCP discover packet, the server answers
-with a DHCP offer packet, the machine sends a DHCP request packet, and
-finally the server sends a DHCP ACK.
+machine.
+
+\begin{enumerate}
+    \item Client sends DHCP DISCOVER to 0.0.0.0/32
+    \item DHCP server sends DHCP OFFER
+    \item Client requests lease with DHCP REQUEST
+    \item Server acknowledges lease with DHCP ACK
+\end{enumerate}
+
+It is relevant to note that multiple offers can be received, hence the structure
+of the above.
 
 \subsection{CIDR}
 CIDR is used to calculate the IP address. The format is x.x.x.x/n
@@ -17,14 +25,12 @@ To convert from full decimal notation to CIDR notation, we convert the
 decimal notation to binary, and note how many bits are set. This
 defines what the prefix should be.
 
-\subsubsection{Calculating subnet mask}
+\subsubsection{Calculating number of subnets}
 The subnet mask and Class determines how many subnets and hosts you get.
 
 \[Hosts = 2^(HostBits)-2
     Subnets = 2^(SubnetBits)-2
 \]
-
-The network address is used for routing tables.
 
 \subsubsection{Calculating subnet address}
 Subnet address is obtained by doing a binary AND between IP address and Subnet Mask.

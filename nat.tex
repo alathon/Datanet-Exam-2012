@@ -16,3 +16,10 @@ compatible too), the application may create a public IP and a public port, which
 appears to be the clients actual IP and port. Other contacts through the
 application establish connection through this public mapping, and the router
 makes sure it is sent to the correct client.
+
+UPnP bindings are of the form (local\_ip, local\_port) map to (public\_ip, 
+public\_port), and are maintained by the router. Example:
+
+Local 192.168.2.5:5555 binds to public 66.128.10.20:2000. This will mean that
+incoming traffic to port 2000 on the outward-facing device, will be routed to
+the machine at 192.168.2.5 on port 5555.

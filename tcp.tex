@@ -1,1 +1,74 @@
 \section{TCP}
+\subsection{Flow control}
+TCP uses an end-to-end flow control protocol to avoid having the sender send
+data too fast for the TCP receiver to receive and process it reliably. Having
+a mechanism for flow control is essential in an environment where machines of
+diverse network speeds communicate. For example, if a PC sends data to a
+smartphone that is slowly processing received data, the smartphone must regulate
+the data flow so as not to be overwhelmed. TCP uses a sliding window flow
+control protocol. In each TCP segment, the receiver specifies in the receive
+window field the amount of additionally received data (in bytes) that it is
+willing to buffer for the connection. The sending host can send only up to
+that amount of data before it must wait for an acknowledgment and window update
+from the receiving host.
+
+TCP sequence numbers and receive windows behave very much like a clock. The
+receive window shifts each time the receiver receives and acknowledges a new
+segment of data. Once it runs out of sequence numbers, the sequence number
+loops back to 0. When a receiver advertises a window size of 0, the sender stops
+sending data and starts the persist timer. The persist timer is used to protect
+TCP from a deadlock situation that could arise if a subsequent window size
+update from the receiver is lost, and the sender cannot send more data until
+receiving a new window size update from the receiver. When the persist timer
+expires, the TCP sender attempts recovery by sending a small packet so that
+the receiver responds by sending another acknowledgement containing the new
+window size.
+
+\subsection{Congestion avoidance}
+To avoid congestion collapse, TCP uses a multi-faceted congestion control strategy. 
+For each connection, TCP maintains a congestion window, limiting the total number 
+of unacknowledged packets that may be in transit end-to-end. This is somewhat 
+analogous to TCP's sliding window used for flow control. TCP uses a mechanism 
+called slow start to increase the congestion window after a connection is 
+initialized and after a timeout. It starts with a window of two times the maximum 
+segment size (MSS). Although the initial rate is low, the rate of increase is 
+very rapid: for every packet acknowledged, the congestion window increases by 1
+ MSS so that the congestion window effectively doubles for every round trip time
+ (RTT). When the congestion window exceeds a threshold ssthresh the algorithm
+ enters a new state, called congestion avoidance. In some implementations (e.g.,
+ Linux), the initial ssthresh is large, and so the first slow start usually ends
+ after a loss. However, ssthresh is updated at the end of each slow start, and
+ will often affect subsequent slow starts triggered by timeouts.
+
+\subsubsection{Congestion avoidance in general:} As long as non-duplicate ACKs
+are received, the congestion window is additively increased by one MSS every
+round trip time. When a packet is lost, the likelihood of duplicate ACKs being
+received is very high (it's possible though unlikely that the stream just
+underwent extreme packet reordering, which would also prompt duplicate ACKs).
+The behavior of Tahoe and Reno differ in how they detect and react to packet loss:
+
+\subsubsection{Tahoe}
+Triple duplicate ACKS are treated the same as a timeout. Tahoe will perform
+"fast retransmit", reduce congestion window to 1 MSS, and reset to slow-start
+state.
+
+\subsubsection{Reno}
+If three duplicate ACKs are received (i.e., four ACKs acknowledging the
+same packet, which are not piggybacked on data, and do not change the receiver's
+advertised window), Reno will halve the congestion window, perform a fast
+retransmit, and enter a phase called Fast Recovery. If an ACK times out, slow
+start is used as it is with Tahoe.
+
+\textbf{Fast Recovery}. (Reno Only) In this state, TCP retransmits the missing packet
+that was signaled by three duplicate ACKs, and waits for an acknowledgment of
+the entire transmit window before returning to congestion avoidance. If there
+is no acknowledgment, TCP Reno experiences a timeout and enters the slow-start
+state.
+
+Both algorithms reduce congestion window to 1 MSS on a timeout event.
+
+\subsubsection{Slow Start}
+TODO
+
+\subsubsection{Fast retransmit}
+TODO
